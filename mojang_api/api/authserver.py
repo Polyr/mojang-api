@@ -1,27 +1,20 @@
 #!/usr/bin/env python3
 
-from uuid import uuid4
-
 from requests import post
 
-from .common import EndpointEnum, format_response
+from ..utils import generate_client_token
+from ._common import BaseURL, Endpoint, format_response
 
 AUTHSERVER_URL = 'https://authserver.mojang.com'
 
 
-class AuthserverEndpoint(EndpointEnum):
+class AuthserverEndpoint(Endpoint):
+    BASE_URL = BaseURL(AUTHSERVER_URL)
     AUTHENTICATE = '/authenticate'
     REFRESH = '/refresh'
     VALIDATE = '/validate'
     SIGNOUT = '/signout'
     INVALIDATE = '/invalidate'
-
-
-AuthserverEndpoint._base_url = AUTHSERVER_URL
-
-
-def generate_client_token():
-    return uuid4().hex
 
 
 def authenticate_user(username, password, client_token=generate_client_token()):
@@ -30,7 +23,7 @@ def authenticate_user(username, password, client_token=generate_client_token()):
         'password': password,
         'clientToken': client_token
     }
-    response = post(str(AuthserverEndpoint.AUTHENTICATE), json=payload)
+    response = post(AuthserverEndpoint.AUTHENTICATE.url, json=payload)
     return format_response(response)
 
 
@@ -39,7 +32,7 @@ def refresh_access_token(access_token, client_token):
         'accessToken': access_token,
         'clientToken': client_token
     }
-    response = post(str(AuthserverEndpoint.REFRESH), json=payload)
+    response = post(AuthserverEndpoint.REFRESH.url, json=payload)
     return format_response(response)
 
 
@@ -50,7 +43,7 @@ def validate_access_token(access_token, client_token=None):
     if client_token != None:
         payload['clientToken'] = client_token
 
-    response = post(str(AuthserverEndpoint.VALIDATE), json=payload)
+    response = post(AuthserverEndpoint.VALIDATE.url, json=payload)
     return format_response(response)
 
 
@@ -59,7 +52,7 @@ def signout_user(username, password):
         'username': username,
         'password': password
     }
-    response = post(str(AuthserverEndpoint.SIGNOUT), json=payload)
+    response = post(AuthserverEndpoint.SIGNOUT.url, json=payload)
     return format_response(response)
 
 
@@ -68,5 +61,5 @@ def invalidate_access_token(access_token, client_token):
         'accessToken': access_token,
         'clientToken': client_token
     }
-    response = post(str(AuthserverEndpoint.INVALIDATE), json=payload)
+    response = post(AuthserverEndpoint.INVALIDATE.url, json=payload)
     return format_response(response)

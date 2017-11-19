@@ -2,18 +2,16 @@
 
 from requests import get
 
-from .common import EndpointEnum, format_response
+from ._common import BaseURL, Endpoint, format_response
 
 STATUS_URL = 'https://status.mojang.com'
 
 
-class StatusEndpoint(EndpointEnum):
+class StatusEndpoint(Endpoint):
+    BASE_URL = BaseURL(STATUS_URL)
     CHECK = '/check'
 
 
-StatusEndpoint._base_url = STATUS_URL
-
-
 def get_status():
-    response = get(str(StatusEndpoint.CHECK))
+    response = get(StatusEndpoint.CHECK.url)
     return format_response(response)
