@@ -19,6 +19,10 @@ class AuthserverEndpoint(Endpoint):
 
 def authenticate_user(username, password, client_token=generate_client_token(), request_user=False):
     payload = {
+        'agent': {
+            'name': 'Minecraft',
+            'version': 1
+        },
         'username': username,
         'password': password,
         'clientToken': client_token
