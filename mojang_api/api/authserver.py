@@ -17,21 +17,27 @@ class AuthserverEndpoint(Endpoint):
     INVALIDATE = '/invalidate'
 
 
-def authenticate_user(username, password, client_token=generate_client_token()):
+def authenticate_user(username, password, client_token=generate_client_token(), request_user=False):
     payload = {
         'username': username,
         'password': password,
         'clientToken': client_token
     }
+    if request_user:
+        payload['requestUser'] = True
+
     response = post(AuthserverEndpoint.AUTHENTICATE.url, json=payload)
     return format_response(response)
 
 
-def refresh_access_token(access_token, client_token):
+def refresh_access_token(access_token, client_token, request_user=False):
     payload = {
         'accessToken': access_token,
         'clientToken': client_token
     }
+    if request_user:
+        payload['requestUser'] = True
+
     response = post(AuthserverEndpoint.REFRESH.url, json=payload)
     return format_response(response)
 
