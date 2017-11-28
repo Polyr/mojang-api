@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as readme:
 setup(
     name='mojang-api',
     version='0.2.0',
-    description='A Python interface to Mojang\'s API and Authentication scheme.',
+    description='A full Python wrapper of Mojang\'s API and Authentication API.',
     long_description=long_description,
     url='https://github.com/SyncMC/mojang-api',
     author='Synchronous',
