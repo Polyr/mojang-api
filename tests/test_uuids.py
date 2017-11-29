@@ -10,6 +10,6 @@ USERNAME_UUID_PAIRS = [
 
 
 def test_uuids():
-    empirical_username_uuid_pairs = [(uuid['name'], uuid['id']) for uuid in [
-        api.get_uuid(username_uuid_pair[0]) for username_uuid_pair in USERNAME_UUID_PAIRS]]
+    empirical_username_uuid_pairs = [(uuid.name, uuid.id) for uuid in [api.get_uuid(
+        username_uuid_pair[0]) for username_uuid_pair in USERNAME_UUID_PAIRS]]
     assert empirical_username_uuid_pairs == USERNAME_UUID_PAIRS
