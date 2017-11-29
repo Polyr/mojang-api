@@ -23,13 +23,12 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6'
     ],
     keywords='mojang minecraft mc api authentication auth',
     packages=find_packages(),
-    install_requires=['requests']
+    install_requires=['requests'],
+    python_requires='>=3.4.*'
 )
