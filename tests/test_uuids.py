@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from mojang_api import get_uuid
+from mojang_api.api import get_uuid
 
 USERNAME_UUID_PAIRS = [
     ('Notch', '069a79f444e94726a5befca90e38aaf5'),
