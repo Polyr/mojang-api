@@ -2,7 +2,7 @@
 
 from requests import get
 
-from ._common import BaseURL, Endpoint, format_response
+from ._common import APIResponse, BaseURL, Endpoint
 
 STATUS_URL = 'https://status.mojang.com'
 
@@ -14,4 +14,4 @@ class StatusEndpoint(Endpoint):
 
 def get_status():
     response = get(StatusEndpoint.CHECK.url)
-    return format_response(response)
+    return APIResponse(response)

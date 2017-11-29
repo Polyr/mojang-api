@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from json.decoder import JSONDecodeError
+from attrdict import AttrDict
 
 from enum import Enum
 
@@ -32,8 +32,26 @@ class Endpoint(Enum):
         return self.url
 
 
-def format_response(response):
-    try:
-        return response.json()
-    except JSONDecodeError:
-        return None
+class APIResponse():
+    def __init__(self, response):
+        self._response = response
+        try:
+            json = response.json()
+        except ValueError:
+            return
+
+        self._json = AttrDict(json)
+
+    @property
+    def response(self):
+        return self._response
+
+    @property
+    def json(self):
+        return self._json
+
+    def __getattr__(self, name):
+        return getattr(self.json, name)
+
+    def __str__(self):
+        return str(self.json)

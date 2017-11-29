@@ -3,7 +3,7 @@
 from requests import post
 
 from ..utils import generate_client_token
-from ._common import BaseURL, Endpoint, format_response
+from ._common import APIResponse, BaseURL, Endpoint
 
 AUTHSERVER_URL = 'https://authserver.mojang.com'
 
@@ -31,7 +31,7 @@ def authenticate_user(username, password, client_token=generate_client_token(), 
         payload['requestUser'] = True
 
     response = post(AuthserverEndpoint.AUTHENTICATE.url, json=payload)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def refresh_access_token(access_token, client_token, request_user=False):
@@ -43,7 +43,7 @@ def refresh_access_token(access_token, client_token, request_user=False):
         payload['requestUser'] = True
 
     response = post(AuthserverEndpoint.REFRESH.url, json=payload)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def validate_access_token(access_token, client_token=None):
@@ -54,7 +54,7 @@ def validate_access_token(access_token, client_token=None):
         payload['clientToken'] = client_token
 
     response = post(AuthserverEndpoint.VALIDATE.url, json=payload)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def signout_user(username, password):
@@ -63,7 +63,7 @@ def signout_user(username, password):
         'password': password
     }
     response = post(AuthserverEndpoint.SIGNOUT.url, json=payload)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def invalidate_access_token(access_token, client_token):
@@ -72,4 +72,4 @@ def invalidate_access_token(access_token, client_token):
         'clientToken': client_token
     }
     response = post(AuthserverEndpoint.INVALIDATE.url, json=payload)
-    return format_response(response)
+    return APIResponse(response)

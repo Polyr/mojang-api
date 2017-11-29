@@ -2,7 +2,7 @@
 
 from requests import get
 
-from ._common import BaseURL, Endpoint, format_response
+from ._common import APIResponse, BaseURL, Endpoint
 
 SESSIONSERVER_URL = 'https://sessionserver.mojang.com'
 
@@ -15,9 +15,9 @@ class SessionserverEndpoint(Endpoint):
 
 def get_user_profile(uuid):
     response = get(SessionserverEndpoint.UUID_TO_PROFILE.url.format(uuid=uuid))
-    return format_response(response)
+    return APIResponse(response)
 
 
 def get_blocked_servers():
     response = get(SessionserverEndpoint.BLOCKED_SERVERS.url)
-    return format_response(response)
+    return APIResponse(response)

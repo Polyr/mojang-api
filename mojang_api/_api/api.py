@@ -2,7 +2,7 @@
 
 from requests import delete, get, post, put
 
-from ._common import BaseURL, Endpoint, format_response
+from ._common import APIResponse, BaseURL, Endpoint
 
 API_URL = 'https://api.mojang.com'
 
@@ -24,17 +24,17 @@ def get_uuid(username, timestamp=None):
     }
     response = get(APIEndpoint.USERNAME_TO_UUID_AT_TIME.url.format(
         username=username), params=params)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def get_username_history(uuid):
     response = get(APIEndpoint.UUID_TO_USERNAME_HISTORY.url.format(uuid=uuid))
-    return format_response(response)
+    return APIResponse(response)
 
 
 def get_uuids(*usernames):
     response = post(APIEndpoint.USERNAMES_TO_UUIDS.url, json=usernames)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def change_skin(uuid, access_token, skin_url, slim_model=False):
@@ -47,7 +47,7 @@ def change_skin(uuid, access_token, skin_url, slim_model=False):
     }
     response = post(APIEndpoint.CHANGE_SKIN.url.format(
         uuid=uuid), headers=headers, data=payload)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def upload_skin(uuid, access_token, path_to_skin, slim_model=False):
@@ -60,7 +60,7 @@ def upload_skin(uuid, access_token, path_to_skin, slim_model=False):
     }
     response = put(APIEndpoint.UPLOAD_SKIN.url.format(
         uuid=uuid), headers=headers, files=files)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def reset_skin(uuid, access_token):
@@ -69,7 +69,7 @@ def reset_skin(uuid, access_token):
     }
     response = delete(APIEndpoint.RESET_SKIN.url.format(
         uuid=uuid), headers=headers)
-    return format_response(response)
+    return APIResponse(response)
 
 
 def get_statistics(item_sold_minecraft=False, prepaid_card_redeemed_minecraft=False, item_sold_cobalt=False, item_sold_scrolls=False):
@@ -83,4 +83,4 @@ def get_statistics(item_sold_minecraft=False, prepaid_card_redeemed_minecraft=Fa
         'metricKeys': [k for (k, v) in sales_mapping.items() if v]
     }
     response = post(APIEndpoint.STATISTICS.url, json=payload)
-    return format_response(response)
+    return APIResponse(response)

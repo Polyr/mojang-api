@@ -29,6 +29,9 @@ setup(
     ],
     keywords='mojang minecraft mc api authentication auth',
     packages=find_packages(),
-    install_requires=['requests'],
+    install_requires=[
+        'attrdict',
+        'requests'
+    ],
     python_requires='>=3.4.*'
 )
