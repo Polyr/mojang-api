@@ -2,7 +2,7 @@
 
 from requests import post
 
-from ..utils import generate_client_token
+from ..utils.uuid import generate_client_token
 from ._common import APIResponse, BaseURL, Endpoint
 
 AUTHSERVER_URL = 'https://authserver.mojang.com'
