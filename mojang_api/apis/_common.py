@@ -36,22 +36,28 @@ class APIResponse():
     def __init__(self, response):
         self._response = response
         try:
-            json = response.json()
+            data = response.json()
         except ValueError:
             return
 
-        self._json = AttrDict(json)
+        if isinstance(data, dict):
+            self._data = AttrDict(data)
+        elif isinstance(data, list):
+            self._data = [AttrDict(json) for json in data]
+        else:
+            raise TypeError(
+                'response JSON must be of type \'dict\' or \'list\'')
 
     @property
     def response(self):
         return self._response
 
     @property
-    def json(self):
-        return self._json
+    def data(self):
+        return self._data
 
     def __getattr__(self, name):
-        return getattr(self.json, name)
+        return getattr(self.data, name)
 
     def __str__(self):
-        return str(self.json)
+        return str(self.data)
