@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from mojang_api import get_uuid as get_uuid_
 from mojang_api.apis.api import get_uuid
 
 USERNAME_UUID_PAIRS = [
@@ -7,6 +8,10 @@ USERNAME_UUID_PAIRS = [
     ('jeb_', '853c80ef3c3749fdaa49938b674adae6'),
     ('Synchronous', '15fffb7e57c64b70bbc3a42dddaf0f81')
 ]
+
+
+def test_importability():
+    assert get_uuid is get_uuid_
 
 
 def test_uuids():
