@@ -2,7 +2,8 @@
 
 from requests import delete, get, post, put
 
-from ._common import APIResponse, BaseURL, Endpoint
+from .._common.endpoint import BaseURL, Endpoint
+from .._common.response import APIResponse
 
 API_URL = 'https://api.mojang.com'
 

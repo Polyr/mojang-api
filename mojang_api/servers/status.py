@@ -2,7 +2,8 @@
 
 from requests import get
 
-from ._common import APIResponse, BaseURL, Endpoint
+from .._common.endpoint import BaseURL, Endpoint
+from .._common.response import APIResponse
 
 STATUS_URL = 'https://status.mojang.com'
 
