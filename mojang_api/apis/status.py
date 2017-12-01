@@ -14,4 +14,4 @@ class StatusEndpoint(Endpoint):
 
 def get_status():
     response = get(StatusEndpoint.CHECK.url)
-    return APIResponse(response)
+    return APIResponse.from_response(response)

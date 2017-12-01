@@ -15,9 +15,9 @@ class SessionserverEndpoint(Endpoint):
 
 def get_user_profile(uuid):
     response = get(SessionserverEndpoint.UUID_TO_PROFILE.url.format(uuid=uuid))
-    return APIResponse(response)
+    return APIResponse.from_response(response)
 
 
 def get_blocked_servers():
     response = get(SessionserverEndpoint.BLOCKED_SERVERS.url)
-    return APIResponse(response)
+    return APIResponse.from_response(response)
