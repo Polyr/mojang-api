@@ -5,11 +5,9 @@ from requests import delete, get, post, put
 from .._common.endpoint import BaseURL, Endpoint
 from .._common.response import APIResponse
 
-API_URL = 'https://api.mojang.com'
-
 
 class APIEndpoint(Endpoint):
-    BASE_URL = BaseURL(API_URL)
+    BASE_URL = BaseURL('https://api.mojang.com')
     USERNAME_TO_UUID_AT_TIME = '/users/profiles/minecraft/{username}'
     UUID_TO_USERNAME_HISTORY = '/user/profiles/{uuid}/names'
     USERNAMES_TO_UUIDS = '/profiles/minecraft'

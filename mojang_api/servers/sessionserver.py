@@ -5,11 +5,9 @@ from requests import get
 from .._common.endpoint import BaseURL, Endpoint
 from .._common.response import APIResponse
 
-SESSIONSERVER_URL = 'https://sessionserver.mojang.com'
-
 
 class SessionserverEndpoint(Endpoint):
-    BASE_URL = BaseURL(SESSIONSERVER_URL)
+    BASE_URL = BaseURL('https://sessionserver.mojang.com')
     UUID_TO_PROFILE = '/session/minecraft/profile/{uuid}'
     BLOCKED_SERVERS = '/blockedservers'
 

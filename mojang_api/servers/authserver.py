@@ -6,11 +6,9 @@ from .._common.endpoint import BaseURL, Endpoint
 from .._common.response import APIResponse
 from ..utils.uuid import generate_client_token
 
-AUTHSERVER_URL = 'https://authserver.mojang.com'
-
 
 class AuthserverEndpoint(Endpoint):
-    BASE_URL = BaseURL(AUTHSERVER_URL)
+    BASE_URL = BaseURL('https://authserver.mojang.com')
     AUTHENTICATE = '/authenticate'
     REFRESH = '/refresh'
     VALIDATE = '/validate'
