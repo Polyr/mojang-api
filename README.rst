@@ -1,7 +1,7 @@
 mojang-api
 ==========
 
-|build-status| |license|
+|build-status| |version| |python-versions| |implementation| |license|
 
 A full Python wrapper of Mojang's `API`_ and `Authentication API`_.
 
@@ -10,10 +10,25 @@ A full Python wrapper of Mojang's `API`_ and `Authentication API`_.
     :scale: 100%
     :target: https://travis-ci.org/SyncMC/mojang-api
 
+.. |version| image:: https://img.shields.io/pypi/v/mojang-api.svg
+    :alt: Version
+    :scale: 100%
+    :target: https://pypi.python.org/pypi/mojang-api
+
+.. |python-versions| image:: https://img.shields.io/pypi/pyversions/mojang-api.svg
+    :alt: Python Versions
+    :scale: 100%
+    :target: https://pypi.python.org/pypi/mojang-api
+
+.. |implementation| image:: https://img.shields.io/pypi/implementation/mojang-api.svg
+    :alt: Implementation
+    :scale: 100%
+    :target: https://pypi.python.org/pypi/mojang-api
+
 .. |license| image:: https://img.shields.io/github/license/SyncMC/mojang-api.svg
     :alt: License
     :scale: 100%
-    :target: https://opensource.org/licenses/MIT
+    :target: LICENSE.txt
 
 .. _API: http://wiki.vg/Mojang_API
 .. _Authentication API: http://wiki.vg/Authentication
