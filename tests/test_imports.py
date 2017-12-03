@@ -15,6 +15,7 @@ IMPORTS = {
     'get_uuid': ['', 'servers.api'],
     'get_uuids': ['', 'servers.api'],
     'invalidate_access_token': ['', 'servers.authserver'],
+    'is_valid_uuid': ['', 'utils.uuid'],
     'refresh_access_token': ['', 'servers.authserver'],
     'reset_skin': ['', 'servers.api'],
     'signout_user': ['', 'servers.authserver'],

@@ -7,4 +7,4 @@ from .servers.authserver import (authenticate_user, invalidate_access_token,
                                  validate_access_token)
 from .servers.sessionserver import get_blocked_servers, get_user_profile
 from .servers.status import get_status
-from .utils.uuid import generate_client_token
+from .utils.uuid import generate_client_token, is_valid_uuid
