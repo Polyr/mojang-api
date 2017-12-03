@@ -25,6 +25,3 @@ class Endpoint(Enum):
     @property
     def url(self):
         return self._url
-
-    def __str__(self):
-        return self.url
