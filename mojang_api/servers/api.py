@@ -3,7 +3,9 @@
 from requests import delete, get, post, put
 
 from .._common.endpoint import BaseURL, Endpoint
+from .._common.player import accept_player
 from .._common.response import APIResponse
+from .sessionserver import get_user_profile
 
 
 class APIEndpoint(Endpoint):
@@ -17,26 +19,47 @@ class APIEndpoint(Endpoint):
     STATISTICS = '/orders/statistics'
 
 
-def get_uuid(username, timestamp=None):
+@accept_player(1)
+def get_uuid(player, timestamp=None):
+    if not player.username and player.uuid:
+        player.username = get_user_profile(player).name
+
     params = {
         'at': timestamp
     }
     response = get(APIEndpoint.USERNAME_TO_UUID_AT_TIME.url.format(
-        username=username), params=params)
+        username=player.username), params=params)
     return APIResponse.from_response(response)
 
 
-def get_username_history(uuid):
-    response = get(APIEndpoint.UUID_TO_USERNAME_HISTORY.url.format(uuid=uuid))
+@accept_player(1)
+def get_username_history(player):
+    if not player.uuid and player.username:
+        player.uuid = get_uuid(player).id
+
+    response = get(
+        APIEndpoint.UUID_TO_USERNAME_HISTORY.url.format(uuid=player.uuid))
     return APIResponse.from_response(response)
 
 
-def get_uuids(*usernames):
+@accept_player(None)
+def get_uuids(*players):
+    usernames = []
+    for player in players:
+        if not player.username and player.uuid:
+            player.username = get_user_profile(player).name
+
+        usernames.append(player.username)
+
     response = post(APIEndpoint.USERNAMES_TO_UUIDS.url, json=usernames)
     return APIResponse.from_response(response)
 
 
-def change_skin(uuid, access_token, skin_url, slim_model=False):
+@accept_player(1)
+def change_skin(player, access_token, skin_url, slim_model=False):
+    if not player.uuid and player.username:
+        player.uuid = get_uuid(player).id
+
     headers = {
         'Authorization': 'Bearer ' + access_token
     }
@@ -45,11 +68,15 @@ def change_skin(uuid, access_token, skin_url, slim_model=False):
         'url': skin_url
     }
     response = post(APIEndpoint.CHANGE_SKIN.url.format(
-        uuid=uuid), headers=headers, data=payload)
+        uuid=player.uuid), headers=headers, data=payload)
     return APIResponse.from_response(response)
 
 
-def upload_skin(uuid, access_token, path_to_skin, slim_model=False):
+@accept_player(1)
+def upload_skin(player, access_token, path_to_skin, slim_model=False):
+    if not player.uuid and player.username:
+        player.uuid = get_uuid(player).id
+
     headers = {
         'Authorization': 'Bearer ' + access_token
     }
@@ -58,16 +85,20 @@ def upload_skin(uuid, access_token, path_to_skin, slim_model=False):
         'file': open(path_to_skin, 'rb')
     }
     response = put(APIEndpoint.UPLOAD_SKIN.url.format(
-        uuid=uuid), headers=headers, files=files)
+        uuid=player.uuid), headers=headers, files=files)
     return APIResponse.from_response(response)
 
 
-def reset_skin(uuid, access_token):
+@accept_player(1)
+def reset_skin(player, access_token):
+    if not player.uuid and player.username:
+        player.uuid = get_uuid(player).id
+
     headers = {
         'Authorization': 'Bearer ' + access_token
     }
     response = delete(APIEndpoint.RESET_SKIN.url.format(
-        uuid=uuid), headers=headers)
+        uuid=player.uuid), headers=headers)
     return APIResponse.from_response(response)
 
 
