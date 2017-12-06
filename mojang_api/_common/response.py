@@ -1,51 +1,57 @@
 #!/usr/bin/env python3
 
-from attrdict import AttrDict
+from box import Box, BoxList
 
 
-class APIResponseMixin:
-    def __init__(self, response, *args, **kwargs):
-        self._response = response
-        super().__init__(*args, **kwargs)
-
-    @property
-    def response(self):
-        return self._response
+class APIResponseDict(Box):
+    pass
 
 
-class APIResponseDict(APIResponseMixin, AttrDict):
-    def __init__(self, cls, response):
-        data = response.json()
-        super(cls, self).__init__(response, data)
-
-
-class APIResponseList(APIResponseMixin, list):
-    def __init__(self, cls, response):
-        data = response.json()
-        super(cls, self).__init__(response, (AttrDict(json) for json in data))
+class APIResponseList(BoxList):
+    pass
 
 
 class APIResponse:
-    @staticmethod
-    def from_response(response):
+    _response = None
+
+    def __new__(cls, response, *args, **kwargs):
         try:
             data = response.json()
-        except ValueError:
-            raise ValueError('response must contain JSON data')
+        except ValueError as e:
+            raise ValueError('response must contain JSON data') from e
 
         if isinstance(data, dict):
-            base_class = APIResponseDict
+            instance_class = APIResponseDict
         elif isinstance(data, list):
-            base_class = APIResponseList
+            instance_class = APIResponseList
         else:
             raise TypeError(
                 'response\'s JSON data must be of type \'dict\' or \'list\'')
 
-        bases = base_class.__bases__
-        dct = dict(base_class.__dict__)
-        cls = globals()['APIResponse']
-        dct['from_response'] = cls.__dict__['from_response']
-        APIResponse = type('APIResponse', bases, dct)
-        instance = APIResponse(APIResponse, response)
-        APIResponse = cls
+        kwargs['camel_killer_box'] = True
+        name = cls.__name__
+        cls = globals()[name]
+        bases = (instance_class,)
+        dct = dict(instance_class.__dict__)
+        preserved_attrs = [
+            '_response',
+            'response',
+            '__init__'
+        ]
+
+        for attr in preserved_attrs:
+            dct[attr] = cls.__dict__[attr]
+
+        new_class = type(name, bases, dct)
+        instance = new_class.__new__(
+            new_class, response, data, *args, **kwargs)
+        new_class.__init__(instance, response, data, *args, **kwargs)
         return instance
+
+    def __init__(self, response, *args, **kwargs):
+        self._response = response
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+    @property
+    def response(self):
+        return self._response

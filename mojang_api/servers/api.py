@@ -29,7 +29,7 @@ def get_uuid(player, timestamp=None):
     }
     response = get(APIEndpoint.USERNAME_TO_UUID_AT_TIME.url.format(
         username=player.username), params=params)
-    return APIResponse.from_response(response)
+    return APIResponse(response)
 
 
 @accept_player(1)
@@ -39,7 +39,7 @@ def get_username_history(player):
 
     response = get(
         APIEndpoint.UUID_TO_USERNAME_HISTORY.url.format(uuid=player.uuid))
-    return APIResponse.from_response(response)
+    return APIResponse(response)
 
 
 @accept_player(None)
@@ -52,7 +52,7 @@ def get_uuids(*players):
         usernames.append(player.username)
 
     response = post(APIEndpoint.USERNAMES_TO_UUIDS.url, json=usernames)
-    return APIResponse.from_response(response)
+    return APIResponse(response)
 
 
 @accept_player(1)
@@ -69,7 +69,7 @@ def change_skin(player, access_token, skin_url, slim_model=False):
     }
     response = post(APIEndpoint.CHANGE_SKIN.url.format(
         uuid=player.uuid), headers=headers, data=payload)
-    return APIResponse.from_response(response)
+    return APIResponse(response)
 
 
 @accept_player(1)
@@ -86,7 +86,7 @@ def upload_skin(player, access_token, path_to_skin, slim_model=False):
     }
     response = put(APIEndpoint.UPLOAD_SKIN.url.format(
         uuid=player.uuid), headers=headers, files=files)
-    return APIResponse.from_response(response)
+    return APIResponse(response)
 
 
 @accept_player(1)
@@ -99,7 +99,7 @@ def reset_skin(player, access_token):
     }
     response = delete(APIEndpoint.RESET_SKIN.url.format(
         uuid=player.uuid), headers=headers)
-    return APIResponse.from_response(response)
+    return APIResponse(response)
 
 
 def get_statistics(item_sold_minecraft=False, prepaid_card_redeemed_minecraft=False, item_sold_cobalt=False, item_sold_scrolls=False):
@@ -113,4 +113,4 @@ def get_statistics(item_sold_minecraft=False, prepaid_card_redeemed_minecraft=Fa
         'metricKeys': [k for (k, v) in sales_mapping.items() if v]
     }
     response = post(APIEndpoint.STATISTICS.url, json=payload)
-    return APIResponse.from_response(response)
+    return APIResponse(response)
