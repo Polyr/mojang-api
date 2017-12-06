@@ -5,6 +5,7 @@ from requests import get
 from .._common.endpoint import BaseURL, Endpoint
 from .._common.player import accept_player
 from .._common.response import APIResponse
+from .api import get_uuid
 
 
 class SessionserverEndpoint(Endpoint):
