@@ -2,10 +2,10 @@
 
 from requests import delete, get, post, put
 
+from . import sessionserver
 from .._common.endpoint import BaseURL, Endpoint
 from .._common.player import accept_player
 from .._common.response import APIResponse
-from .sessionserver import get_user_profile
 
 
 class APIEndpoint(Endpoint):
@@ -22,7 +22,7 @@ class APIEndpoint(Endpoint):
 @accept_player(1)
 def get_uuid(player, timestamp=None):
     if not player.username and player.uuid:
-        player.username = get_user_profile(player).name
+        player.username = sessionserver.get_user_profile(player).name
 
     params = {
         'at': timestamp
@@ -47,7 +47,7 @@ def get_uuids(*players):
     usernames = []
     for player in players:
         if not player.username and player.uuid:
-            player.username = get_user_profile(player).name
+            player.username = sessionserver.get_user_profile(player).name
 
         usernames.append(player.username)
 
