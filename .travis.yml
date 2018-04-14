@@ -2,23 +2,16 @@ language: python
 python:
   - 3.5
   - 3.6
-install: true
-stages:
-  - test
-  - upload_coverage
-  - name: deploy
-    if: tag IS present
-jobs:
-  include:
-    - stage: test
-      install: pip install .
-      script: python setup.py test
-    - stage: upload_coverage
-      install: pip install coveralls
-      after_success: coveralls
-    - stage: deploy
-      deploy:
-        provider: pypi
-        user: $PYPI_USERNAME
-        password: $PYPI_PASSWORD
-        distributions: sdist bdist_wheel
+install:
+  - pip install .
+script: python setup.py test
+after_success:
+  - pip install coveralls
+  - coveralls
+deploy:
+  provider: pypi
+  user: $PYPI_USERNAME
+  password: $PYPI_PASSWORD
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
