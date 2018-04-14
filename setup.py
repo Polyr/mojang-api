@@ -23,12 +23,12 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6'
     ],
     keywords='mojang minecraft mc api authentication auth',
     packages=find_packages(),
+    setup_requires='pytest-runner',
     tests_require=[
         'pytest',
         'pytest-cov',
@@ -38,5 +38,5 @@ setup(
         'python-box',
         'requests'
     ],
-    python_requires='>=3.4.*'
+    python_requires='>=3.5.*'
 )
