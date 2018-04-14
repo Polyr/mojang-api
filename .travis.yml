@@ -4,8 +4,7 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - pip install . pipenv
-  - pipenv install --dev
+  - pip install .
 script: pytest --cov-report= --cov=mojang_api
 after_success: coveralls
 deploy:
