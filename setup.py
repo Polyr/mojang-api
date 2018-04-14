@@ -31,8 +31,7 @@ setup(
     setup_requires='pytest-runner',
     tests_require=[
         'pytest',
-        'pytest-cov',
-        'coveralls'
+        'pytest-cov'
     ],
     install_requires=[
         'python-box',
