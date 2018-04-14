@@ -31,7 +31,7 @@ class APIResponse:
         kwargs['camel_killer_box'] = True
         name = cls.__name__
         cls = globals()[name]
-        bases = (instance_class,)
+        bases = (instance_class,) + (APIResponse,)
         dct = dict(instance_class.__dict__)
         preserved_attrs = [
             '_response',
