@@ -9,3 +9,10 @@ install:
   - pip install coveralls
 script: pytest --cov-report= --cov=mojang_api
 after_success: coveralls
+deploy:
+  provider: pypi
+  user: $PYPI_USERNAME
+  password: $PYPI_PASSWORD
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true
