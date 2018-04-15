@@ -13,5 +13,6 @@ deploy:
   user: $PYPI_USERNAME
   password: $PYPI_PASSWORD
   distributions: sdist bdist_wheel
+  skip_cleanup: true
   on:
     tags: true
