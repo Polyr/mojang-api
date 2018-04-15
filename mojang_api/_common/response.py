@@ -11,27 +11,36 @@ class APIResponseList(BoxList):
     pass
 
 
+class APIResponseEmpty:
+    def __new__(cls, *args, **kwargs):
+        return super(cls.__class__, cls).__new__(cls)
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+
 class APIResponse:
     _response = None
 
     def __new__(cls, response, *args, **kwargs):
+        data = None
         try:
             data = response.json()
-        except ValueError as e:
-            raise ValueError('response must contain JSON data') from e
-
-        if isinstance(data, dict):
-            instance_class = APIResponseDict
-        elif isinstance(data, list):
-            instance_class = APIResponseList
+        except ValueError:
+            instance_class = APIResponseEmpty
         else:
-            raise TypeError(
-                'response\'s JSON data must be of type \'dict\' or \'list\'')
+            if isinstance(data, dict):
+                instance_class = APIResponseDict
+            elif isinstance(data, list):
+                instance_class = APIResponseList
+            else:
+                raise TypeError(
+                    'response\'s JSON data must be of type \'dict\' or \'list\'')
 
         kwargs['camel_killer_box'] = True
         name = cls.__name__
         cls = globals()[name]
-        bases = (instance_class,) + (APIResponse,)
+        bases = (instance_class,) + (cls,)
         dct = dict(instance_class.__dict__)
         preserved_attrs = [
             '_response',
