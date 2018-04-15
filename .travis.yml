@@ -3,15 +3,16 @@ sudo: false
 install: true
 script: true
 stages:
-  - test
+  - name: test
+    python:
+      - 3.5
+      - 3.6
   - upload coverage
   - name: deploy
     if: tag IS present
 jobs:
   include:
     - stage: test
-      python: 3.5
-      python: 3.6
       install: pip install .
       script: python setup.py test
     - stage: upload coverage
