@@ -2,6 +2,8 @@ language: python
 python:
   - 3.5
   - 3.6
+install: true
+script: true
 stages:
   - test
   - upload coverage
@@ -15,10 +17,12 @@ jobs:
     - stage: upload coverage
       python: 3.6
       install: pip install coveralls
+      script: true
       after_success: coveralls
     - stage: deploy
       python: 3.6
       install: true
+      script: true
       deploy:
         provider: pypi
         user: $PYPI_USERNAME
